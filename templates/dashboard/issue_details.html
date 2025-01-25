@@ -23,6 +23,16 @@
                         <strong>المبلغ:</strong>
                         <p>{{ issue.reporter_name }}</p>
                     </div>
+
+                    <div class="mb-3">
+                        <strong>تاريخ الإنشاء:</strong>
+                        <p>{{ issue.created_at.strftime('%Y-%m-%d %I:%M %p') }}</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <strong>آخر تحديث:</strong>
+                        <p>{{ issue.updated_at.strftime('%Y-%m-%d %I:%M %p') }}</p>
+                    </div>
                     
                     <div class="mb-3">
                         <strong>حالة الصيانة:</strong>

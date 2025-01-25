@@ -41,8 +41,8 @@ class Issue(db.Model):
             'description': self.description,
             'reporter_name': self.reporter_name,
             'status': self.status,
-            'created_at': self.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-            'updated_at': self.updated_at.strftime('%Y-%m-%d %H:%M:%S')
+            'created_at': self.created_at.strftime('%Y-%m-%d %I:%M %p'),
+            'updated_at': self.updated_at.strftime('%Y-%m-%d %I:%M %p')
         }
 
 class Comment(db.Model):

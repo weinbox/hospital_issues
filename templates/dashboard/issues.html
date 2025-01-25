@@ -21,7 +21,7 @@
                 {% for issue in issues %}
                 <tr>
                     <td>{{ issue.id }}</td>
-                    <td>{{ issue.created_at }}</td>
+                    <td>{{ issue.created_at.strftime('%Y-%m-%d %I:%M %p') }}</td>
                     <td>{{ issue.location }}</td>
                     <td>{{ issue.description }}</td>
                     <td>{{ issue.status }}</td>
