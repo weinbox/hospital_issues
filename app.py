@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from models import db, User, Issue
+from models import db, User, Issue, Comment
 from config import Config
 import os
 from datetime import datetime, timedelta
@@ -90,6 +90,18 @@ def update_status(id):
     db.session.commit()
     flash('تم تحديث حالة العطل بنجاح', 'success')
     return redirect(url_for('view_issue', id=id))
+
+@app.route('/issue/<int:id>/delete', methods=['POST'])
+@login_required
+def delete_issue(id):
+    issue = Issue.query.get_or_404(id)
+    # حذف التعليقات المرتبطة بالعطل أولاً
+    Comment.query.filter_by(issue_id=id).delete()
+    # ثم حذف العطل نفسه
+    db.session.delete(issue)
+    db.session.commit()
+    flash('تم حذف العطل بنجاح', 'success')
+    return redirect(url_for('dashboard'))
 
 @app.route('/new_issue', methods=['POST'])
 def new_issue():
