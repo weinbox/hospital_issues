@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron text-center">
+                <h1 class="display-4">نظام متابعة الأعطال</h1>
+                <p class="lead">مستشفى ابن القف - الشعبة الهندسية</p>
+                <hr class="my-4">
+                <p>يمكنك متابعة جميع الأعطال وحالة الصيانة من خلال هذا النظام</p>
+                <div class="btn-group" role="group">
+                    <a class="btn btn-success btn-lg" href="{{ url_for('new_issue') }}" role="button">إبلاغ عن عطل جديد</a>
+                    <a class="btn btn-primary btn-lg" href="{{ url_for('list_issues') }}" role="button">عرض المشكلات</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

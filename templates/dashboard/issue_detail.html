@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>تفاصيل المشكلة #{{ row_number }}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <strong>التاريخ:</strong>
+                        <p>{{ issue['تاريخ التسجيل'] }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <strong>المكان:</strong>
+                        <p>{{ issue['المكان'] }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <strong>تفاصيل العطل:</strong>
+                        <p>{{ issue['تفاصيل العطل'] }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <strong>الأولوية:</strong>
+                        <p>
+                            <span class="badge {% if issue['الاولوية'] == 'عاجل' %}bg-danger{% else %}bg-warning{% endif %}">
+                                {{ issue['الاولوية'] }}
+                            </span>
+                        </p>
+                    </div>
+                    <div class="mb-3">
+                        <strong>حالة الصيانة:</strong>
+                        <p>{{ issue['حالة الصيانة \n(الشركة)'] }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <strong>المتابعة:</strong>
+                        <p>{{ issue['المتابعة \n(الهندسية)'] }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- نموذج تحديث الحالة -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>تحديث الحالة</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('update_issue', row_number=row_number) }}">
+                        <div class="mb-3">
+                            <label for="status" class="form-label">حالة الصيانة:</label>
+                            <select class="form-select" id="status" name="status">
+                                <option value="">اختر الحالة</option>
+                                <option value="قيد المعالجة">قيد المعالجة</option>
+                                <option value="تم الإصلاح">تم الإصلاح</option>
+                                <option value="بانتظار قطع غيار">بانتظار قطع غيار</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="priority" class="form-label">الأولوية:</label>
+                            <select class="form-select" id="priority" name="priority">
+                                <option value="">اختر الأولوية</option>
+                                <option value="عاجل">عاجل</option>
+                                <option value="عادي">عادي</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">تحديث</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- التعليقات -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>التعليقات</h4>
+                </div>
+                <div class="card-body">
+                    {% if comments %}
+                        {% for comment in comments %}
+                        <div class="comment mb-3 p-3 bg-light rounded">
+                            <p>{{ comment.content }}</p>
+                            <small class="text-muted">{{ comment.created_at }}</small>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>لا توجد تعليقات حتى الآن</p>
+                    {% endif %}
+
+                    <!-- نموذج إضافة تعليق -->
+                    <form method="POST" action="{{ url_for('add_comment', row_number=row_number) }}" class="mt-4">
+                        <div class="mb-3">
+                            <label for="content" class="form-label">إضافة تعليق:</label>
+                            <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">إرسال التعليق</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

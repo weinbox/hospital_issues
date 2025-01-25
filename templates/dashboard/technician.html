@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3>البلاغات المسندة إليك</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>رقم البلاغ</th>
+                                <th>القسم</th>
+                                <th>الموقع</th>
+                                <th>نوع المشكلة</th>
+                                <th>الأولوية</th>
+                                <th>الحالة</th>
+                                <th>وقت الإصلاح المتوقع</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for issue in issues %}
+                            <tr>
+                                <td>#{{ issue.id }}</td>
+                                <td>{{ issue.title }}</td>
+                                <td>{{ issue.location }}</td>
+                                <td>{{ issue.issue_type }}</td>
+                                <td>
+                                    <span class="badge bg-{{ issue.priority_color }}">
+                                        {{ issue.priority }}
+                                    </span>
+                                </td>
+                                <td>{{ issue.status }}</td>
+                                <td>
+                                    {% if issue.estimated_time %}
+                                        {{ issue.estimated_time.strftime('%Y-%m-%d %H:%M') }}
+                                    {% else %}
+                                        غير محدد
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('issue_detail', id=issue.id) }}" class="btn btn-sm btn-info">
+                                        تحديث الحالة
+                                    </a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="8" class="text-center">لا توجد بلاغات مسندة إليك</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

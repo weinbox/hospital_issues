@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center">تسجيل بلاغ صيانة جديد</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('report_issue') }}">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">الردهة او القسم</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">رقم الغرفة او اسم الغرفة</label>
+                        <input type="text" class="form-control" id="location" name="location" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">وصف المشكلة</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="reporter_name" class="form-label">اسم المبلغ</label>
+                        <input type="text" class="form-control" id="reporter_name" name="reporter_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">رقم الهاتف</label>
+                        <input type="text" class="form-control" id="phone" name="phone" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">إرسال البلاغ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

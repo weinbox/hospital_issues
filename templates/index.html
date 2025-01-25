@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron text-center py-5">
+                <h1 class="display-4">نظام متابعة الأعطال</h1>
+                <p class="lead">مستشفى ابن القف - الشعبة الهندسية</p>
+                <hr class="my-4">
+                <p>يمكنك الإبلاغ عن عطل جديد من خلال النموذج أدناه</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h3>إبلاغ عن عطل جديد</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('new_issue') }}">
+                        <div class="mb-3">
+                            <label for="department" class="form-label">القسم</label>
+                            <select class="form-select" id="department" name="department" required onchange="updateRooms()">
+                                <option value="">اختر القسم</option>
+                                <option value="الردهة الأولى">الردهة الأولى</option>
+                                <option value="الردهة الثانية">الردهة الثانية</option>
+                                <option value="الردهة الثالثة">الردهة الثالثة</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="room" class="form-label">الغرفة</label>
+                            <select class="form-select" id="room" name="room" required>
+                                <option value="">اختر الغرفة</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="issue_details" class="form-label">تفاصيل العطل</label>
+                            <textarea class="form-control" id="issue_details" name="issue_details" rows="3" required></textarea>
+                            <div class="form-text">يرجى وصف المشكلة بالتفصيل</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="reporter_name" class="form-label">اسم المبلغ</label>
+                            <input type="text" class="form-control" id="reporter_name" name="reporter_name" required>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">إرسال البلاغ</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const rooms = {
+    'الردهة الأولى': [
+        // الغرف الإدارية
+        'غرفة الكهرباء',
+        'غرفة المخزن',
+        'غرفة الممرضات',
+        'غرفة الممرضين',
+        // غرف المرضى
+        'غرفة 1', 'غرفة 2', 'غرفة 3', 'غرفة 4', 'غرفة 5',
+        'غرفة 6', 'غرفة 7', 'غرفة 8', 'غرفة 9', 'غرفة 10',
+        'غرفة 11'
+    ],
+    'الردهة الثانية': [
+        // الغرف الإدارية
+        'غرفة الكهرباء',
+        'غرفة المخزن',
+        'غرفة الممرضات',
+        'غرفة الممرضين',
+        // غرف المرضى
+        'غرفة 1', 'غرفة 2', 'غرفة 3', 'غرفة 4', 'غرفة 5',
+        'غرفة 6', 'غرفة 7', 'غرفة 8', 'غرفة 9', 'غرفة 10',
+        'غرفة 11'
+    ],
+    'الردهة الثالثة': [
+        // الغرف الإدارية
+        'غرفة الكهرباء',
+        'غرفة المخزن',
+        'غرفة الممرضات',
+        'غرفة الممرضين',
+        // غرف المرضى
+        'غرفة 1', 'غرفة 2', 'غرفة 3', 'غرفة 4', 'غرفة 5',
+        'غرفة 6', 'غرفة 7', 'غرفة 8', 'غرفة 9', 'غرفة 10',
+        'غرفة 11'
+    ]
+};
+
+function updateRooms() {
+    const department = document.getElementById('department').value;
+    const roomSelect = document.getElementById('room');
+    
+    // مسح القائمة الحالية
+    roomSelect.innerHTML = '<option value="">اختر الغرفة</option>';
+    
+    // إضافة الغرف المناسبة للقسم المختار
+    if (department && rooms[department]) {
+        // إضافة عنوان للغرف الإدارية
+        const adminGroup = document.createElement('optgroup');
+        adminGroup.label = 'الغرف الإدارية';
+        
+        // إضافة الغرف الإدارية
+        rooms[department].slice(0, 4).forEach(room => {
+            const option = document.createElement('option');
+            option.value = room;
+            option.textContent = room;
+            adminGroup.appendChild(option);
+        });
+        
+        roomSelect.appendChild(adminGroup);
+        
+        // إضافة عنوان لغرف المرضى
+        const patientGroup = document.createElement('optgroup');
+        patientGroup.label = 'غرف المرضى';
+        
+        // إضافة غرف المرضى
+        rooms[department].slice(4).forEach(room => {
+            const option = document.createElement('option');
+            option.value = room;
+            option.textContent = room;
+            patientGroup.appendChild(option);
+        });
+        
+        roomSelect.appendChild(patientGroup);
+    }
+}
+</script>
+{% endblock %}

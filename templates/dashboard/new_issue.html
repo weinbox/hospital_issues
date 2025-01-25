@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h3>إبلاغ عن عطل جديد</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('new_issue') }}">
+                        <div class="mb-3">
+                            <label for="location" class="form-label">المكان</label>
+                            <input type="text" class="form-control" id="location" name="location" required>
+                            <div class="form-text">مثال: قسم الطوارئ - غرفة 101</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="issue_details" class="form-label">تفاصيل العطل</label>
+                            <textarea class="form-control" id="issue_details" name="issue_details" rows="3" required></textarea>
+                            <div class="form-text">يرجى وصف المشكلة بالتفصيل</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="priority" class="form-label">الأولوية</label>
+                            <select class="form-select" id="priority" name="priority" required>
+                                <option value="">اختر الأولوية</option>
+                                <option value="عاجل">عاجل</option>
+                                <option value="عادي">عادي</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="reporter_name" class="form-label">اسم المبلغ</label>
+                            <input type="text" class="form-control" id="reporter_name" name="reporter_name" required>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">إرسال البلاغ</button>
+                            <a href="{{ url_for('list_issues') }}" class="btn btn-secondary">إلغاء</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

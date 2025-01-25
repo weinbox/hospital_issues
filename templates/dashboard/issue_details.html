@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h3>تفاصيل العطل #{{ issue.id }}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <strong>المكان:</strong>
+                        <p>{{ issue.location }}</p>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <strong>تفاصيل العطل:</strong>
+                        <p>{{ issue.description }}</p>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <strong>المبلغ:</strong>
+                        <p>{{ issue.reporter_name }}</p>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <strong>حالة الصيانة:</strong>
+                        <form method="POST" action="{{ url_for('update_status', id=issue.id) }}" class="mt-2">
+                            <div class="input-group">
+                                <select class="form-select" name="status" required>
+                                    <option value="جديد" {% if issue.status == 'جديد' %}selected{% endif %}>جديد</option>
+                                    <option value="قيد المعالجة" {% if issue.status == 'قيد المعالجة' %}selected{% endif %}>قيد المعالجة</option>
+                                    <option value="تم الإصلاح" {% if issue.status == 'تم الإصلاح' %}selected{% endif %}>تم الإصلاح</option>
+                                    <option value="مؤجل" {% if issue.status == 'مؤجل' %}selected{% endif %}>مؤجل</option>
+                                    <option value="بانتظار قطع غيار" {% if issue.status == 'بانتظار قطع غيار' %}selected{% endif %}>بانتظار قطع غيار</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary">تحديث الحالة</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <strong>تاريخ البلاغ:</strong>
+                        <p>{{ issue.created_at }}</p>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <strong>آخر تحديث:</strong>
+                        <p>{{ issue.updated_at }}</p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">العودة للقائمة</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
